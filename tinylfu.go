@@ -22,7 +22,6 @@ type T struct {
 }
 
 func New(size int, samples int) *T {
-
 	const lruPct = 1
 
 	lruSize := (lruPct * size) / 100
