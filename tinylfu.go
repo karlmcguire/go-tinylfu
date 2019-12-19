@@ -6,11 +6,13 @@ package tinylfu
 
 import (
 	"container/list"
-	"github.com/dgryski/go-metro"
+
+	metro "github.com/dgryski/go-metro"
+	"github.com/xba/experiments/cm"
 )
 
 type T struct {
-	c       *cm4
+	c       *cm.Sketch
 	bouncer *doorkeeper
 	w       int
 	samples int
@@ -29,7 +31,7 @@ func New(size int, samples int) *T {
 	}
 	slruSize := int(float64(size) * ((100.0 - lruPct) / 100.0))
 	if slruSize < 1 {
-		slruSize  = 1
+		slruSize = 1
 
 	}
 	slru20 := int(0.2 * float64(slruSize))
@@ -40,7 +42,7 @@ func New(size int, samples int) *T {
 	data := make(map[string]*list.Element, size)
 
 	return &T{
-		c:       newCM4(size),
+		c:       cm.NewSketch(uint64(size)),
 		w:       0,
 		samples: samples,
 		bouncer: newDoorkeeper(samples, 0.01),
@@ -56,7 +58,7 @@ func (t *T) Get(key string) (interface{}, bool) {
 
 	t.w++
 	if t.w == t.samples {
-		t.c.reset()
+		t.c.Reset()
 		t.bouncer.reset()
 		t.w = 0
 	}
@@ -64,13 +66,13 @@ func (t *T) Get(key string) (interface{}, bool) {
 	val, ok := t.data[key]
 	if !ok {
 		keyh := metro.Hash64Str(key, 0)
-		t.c.add(keyh)
+		t.c.Increment(keyh)
 		return nil, false
 	}
 
 	item := val.Value.(*slruItem)
 
-	t.c.add(item.keyh)
+	t.c.Increment(item.keyh)
 
 	v := item.value
 	if item.listid == 0 {
@@ -102,8 +104,8 @@ func (t *T) Add(key string, val interface{}) {
 		return
 	}
 
-	vcount := t.c.estimate(victim.keyh)
-	ocount := t.c.estimate(oitem.keyh)
+	vcount := t.c.Estimate(victim.keyh)
+	ocount := t.c.Estimate(oitem.keyh)
 
 	if ocount < vcount {
 		return

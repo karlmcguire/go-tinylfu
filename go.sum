@@ -1,0 +1,6 @@
+github.com/dgryski/go-metro v0.0.0-20180109044635-280f6062b5bc h1:8WFBn63wegobsYAX0YjD+8suexZDga5CctH4CCTx2+8=
+github.com/dgryski/go-metro v0.0.0-20180109044635-280f6062b5bc/go.mod h1:c9O8+fpSOX1DM8cPNSkX/qsBWdkD4yd2dpciOWQjpBw=
+github.com/xba/experiments v0.0.0-20191219203705-19d236719959 h1:qI4U4/NJkasSCi0DEquHxVFFX5vOGace9HrTP9drGs0=
+github.com/xba/experiments/cm v0.0.0-20191219203705-19d236719959 h1:ArJIbUgXte4opVFm9NSA+iyHQzrhxJf/99svVA+6jdg=
+github.com/xba/experiments/cm v0.0.0-20191219203705-19d236719959/go.mod h1:GBf+wDU0769m1Gcdc8ODhbHXLGF17pG19xpgVSmx3GY=
+github.com/xba/experiments/fib v0.0.0-20191213222304-8ad7a74f3fad/go.mod h1:KBOC0hyKlkmp9+RIOyHRWTz7s6XzEJcVngGZM9xf7ZA=
